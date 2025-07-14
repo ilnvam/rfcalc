@@ -8,7 +8,7 @@ class EIRPFrame(customtkinter.CTkFrame):
         super().__init__(parent)
 
         self.conv = EIRPConverter()
-        self.from_enum_var = EIRP.EIRP_dBm
+        self.from_enum_var = EIRP.dbuv_per_m
         self.to_enum_var = EIRP.EIRP_dBm
 
         # ====== Row 0 ======

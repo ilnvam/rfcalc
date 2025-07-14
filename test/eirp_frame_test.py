@@ -31,7 +31,7 @@ def test_valid_conversion(monkeypatch, tk_root):
         assert value == 10.0
         assert distance == 10.0
         assert slope == 20.0
-        assert from_u == EIRP.EIRP_dBm
+        assert from_u == EIRP.dbuv_per_m
         assert to_u == EIRP.EIRP_dBm
         return 42.0                # arbitrary deterministic result
 
@@ -41,7 +41,8 @@ def test_valid_conversion(monkeypatch, tk_root):
     frame.from_val.set("10")
     frame.distance.set("10")
     frame.slope.set("20")
-
+    frame.from_option.set(EIRP.dbuv_per_m)
+    frame.to_option.set(EIRP.EIRP_dBm)
     # Trigger calculation
     frame.update_result()
 
