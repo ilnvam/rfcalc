@@ -1,11 +1,13 @@
 [project]
 name = "rfcalc"
 version = "0.1.0"
-description = "Add your description here"
+description = "Various calculator related to RF measurement"
 authors = [
   { name = "William Alam" }
 ]
-requires-python = ">=3.8"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.9"
 dependencies = [
     "customtkinter==5.2.2",
     "pytest==8.4.1",
@@ -16,5 +18,7 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["View", "UnitConverter"]
 package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
