@@ -8,7 +8,7 @@ class UnitEnum(Enum):
     pass
 
 
-class UnitConverter(ABC):
+class BaseConverter(ABC):
     """
     Abstract base class for unit conversion between different units of the same physical quantity.
 

@@ -1,5 +1,5 @@
 from math import log10, pi
-from src.UnitConverter.base_converter import UnitConverter, UnitEnum
+from src.UnitConverter.base_converter import BaseConverter, UnitEnum
 
 
 class EIRP(UnitEnum):
@@ -60,7 +60,7 @@ def eirp_to_wm2(value:float, distance:float,) -> float:
     """
     return (pow(10, value / 10) / 1e3) / (4 * pi * pow(distance, 2))
 
-class EIRPConverter(UnitConverter):
+class EIRPConverter(BaseConverter):
     """
     A unit converter for Effective Isotropic Radiated Power (EIRP) and related units.
 
@@ -124,13 +124,3 @@ class EIRPConverter(UnitConverter):
             EIRP.dbuv: lambda x, **kwargs: x + 107,
             EIRP.W_m_sq: lambda x, **kwargs: eirp_to_wm2(x, kwargs["distance"])
         }
-
-
-if __name__ == "__main__":
-    c = EIRPConverter()
-    print(c.convert(30, EIRP.EIRP_dBm, EIRP.dbuv_per_m, distance=3.0, slope=20))
-
-    try:
-        print(c.convert(30, EIRP.EIRP_dBm, EIRP.EIRP_mW, slope=20))
-    except (KeyError, TypeError) as e:
-        print(e)

@@ -1,10 +1,13 @@
 import math
 from typing import Dict, Callable
-from src.UnitConverter.base_converter import UnitConverter, UnitEnum
+from src.UnitConverter.base_converter import BaseConverter, UnitEnum
 from src.UnitConverter.rf_util import log_20, inverse_log_20
 
 
 class FSUNIT(UnitEnum):
+    """
+    Enumeration of supported field strength and electromagnetic units.
+    """
     V_PER_M = "V/m"
     UV_PER_M = "μV/m"
     DBUV_PER_M = "dBμV/m"
@@ -18,8 +21,28 @@ class FSUNIT(UnitEnum):
     MW_PER_CM_SQ = "mW/cm\u00B2"    # mW/(cm^2)
     W_PER_M_SQ = "W/m\u00B2"        # W/(m^2)
 
-class FieldStrengthConverter(UnitConverter):
+class FieldStrengthConverter(BaseConverter):
+    """
+    A unit converter for converting between various field strength and electromagnetic units.
 
+    Inherits from:
+        BaseConverter
+
+    Base Unit:
+        FSUNIT.DBUV_PER_M (dBμV/m)
+
+    Properties:
+        base_unit (UnitEnum): Defines dBμV/m as the canonical base unit.
+        _to_base (dict): Dictionary mapping FSUNIT to conversion functions that
+                         convert values *to* the base unit.
+        _from_base (dict): Dictionary mapping FSUNIT to conversion functions that
+                           convert values *from* the base unit.
+
+    Example:
+        >>> converter = FieldStrengthConverter()
+        >>> converter.convert(1000, FSUNIT.UV_PER_M, FSUNIT.DBUV_PER_M)
+        60.0
+    """
     @property
     def base_unit(self) -> UnitEnum:
         return FSUNIT.DBUV_PER_M
@@ -55,17 +78,3 @@ class FieldStrengthConverter(UnitConverter):
             FSUNIT.Tesla: lambda x: inverse_log_20(x - 49.5) / 1e12,
             FSUNIT.Gauss: lambda x: inverse_log_20(x - 49.5) / 1e8,
         }
-
-def main():
-
-    value_to_convert = 289.5
-    conv = FieldStrengthConverter()
-
-    try:
-        value_target_unit = conv.convert(value_to_convert, FSUNIT.DBUV_PER_M, FSUNIT.Tesla)
-        print(f"{value_target_unit:0.2f}")
-    except TypeError as err:
-        print(err)
-
-if __name__ == "__main__":
-    main()
