@@ -1,9 +1,11 @@
 from math import log10, tan, radians
 
 def log_20(value):
+    """ Log value for voltage and current in 50ohm system """
     return 20 * log10(value)
 
 def inverse_log_20(value):
+    """ Inverse Log value for voltage and current in 50ohm system """
     return pow(10,value/20)
 
 def interpolate(freq1: float, amp1: float, freq2: float, amp2: float, target_freq: float) -> float:

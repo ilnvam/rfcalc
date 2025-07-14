@@ -1,5 +1,5 @@
 [project]
-name = "RF Calculator"
+name = "rfcalc"
 version = "0.1.0"
 description = "Add your description here"
 authors = [
@@ -14,3 +14,7 @@ dependencies = [
 [build-system]
 requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["View", "UnitConverter"]
+package-dir = {"" = "src"}
