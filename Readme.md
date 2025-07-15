@@ -1,3 +1,13 @@
+# RF Calculator
+Various calculator related to RF measurement 
+
+# Features
+- Field strength conversion
+- EIRP calculator
+- Interpolation for transducer factor
+- Antenna to EUT distance based on 3dB beamwidth
+- Limit calculator from two different testing distance
+
 # Packaging with PyInstaller
 use the following command for packaging using Pyinstaller. Do not use onefile option
 
