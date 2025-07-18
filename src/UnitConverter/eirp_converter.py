@@ -1,4 +1,5 @@
 from math import log10, pi
+
 from src.UnitConverter.base_converter import BaseConverter, UnitEnum
 
 
@@ -9,9 +10,10 @@ class EIRP(UnitEnum):
     ERP_mW = "ERP (mW)"
     dbuv_per_m = "dBμV/m"
     dbuv = "dBμV"
-    W_m_sq = "W/m\u00B2" # W/(m^2)
+    W_m_sq = "W/m\u00b2"  # W/(m^2)
 
-def eirp_to_dbuvm(value:float, radius:float, slope:float = 20) -> float:
+
+def eirp_to_dbuvm(value: float, radius: float, slope: float = 20) -> float:
     """
     Converts EIRP (in dBm) to electric field strength in dBμV/m.
 
@@ -28,7 +30,8 @@ def eirp_to_dbuvm(value:float, radius:float, slope:float = 20) -> float:
     """
     return value - slope * log10(radius) + 104.8
 
-def dbuvm_to_eirp(value:float, radius:float, slope:float = 20) -> float:
+
+def dbuvm_to_eirp(value: float, radius: float, slope: float = 20) -> float:
     """
     Converts electric field strength (dBμV/m) to EIRP (dBm).
 
@@ -45,7 +48,11 @@ def dbuvm_to_eirp(value:float, radius:float, slope:float = 20) -> float:
     """
     return value + slope * log10(radius) - 104.8
 
-def eirp_to_wm2(value:float, distance:float,) -> float:
+
+def eirp_to_wm2(
+    value: float,
+    distance: float,
+) -> float:
     """
     Converts EIRP (in dBm) to power flux density (W/m²).
 
@@ -59,6 +66,7 @@ def eirp_to_wm2(value:float, distance:float,) -> float:
         float: Power density in watts per square meter (W/m²).
     """
     return (pow(10, value / 10) / 1e3) / (4 * pi * pow(distance, 2))
+
 
 class EIRPConverter(BaseConverter):
     """
@@ -109,9 +117,11 @@ class EIRPConverter(BaseConverter):
             EIRP.EIRP_mW: lambda x, **kwargs: 10 * log10(x),
             EIRP.ERP_dBm: lambda x, **kwargs: x + 2.15,
             EIRP.ERP_mW: lambda x, **kwargs: 10 * log10(x) + 2.15,
-            EIRP.dbuv_per_m: lambda x, **kwargs: dbuvm_to_eirp(x, kwargs["distance"], kwargs["slope"]),
+            EIRP.dbuv_per_m: lambda x, **kwargs: dbuvm_to_eirp(
+                x, kwargs["distance"], kwargs["slope"]
+            ),
             EIRP.dbuv: lambda x, **kwargs: x - 107,
-            EIRP.W_m_sq: lambda x, **kwargs: x * (4 * pi * pow(kwargs["distance"], 2) )
+            EIRP.W_m_sq: lambda x, **kwargs: x * (4 * pi * pow(kwargs["distance"], 2)),
         }
 
     @property
@@ -119,8 +129,10 @@ class EIRPConverter(BaseConverter):
         return {
             EIRP.EIRP_mW: lambda x, **kwargs: pow(10, x / 10),
             EIRP.ERP_dBm: lambda x, **kwargs: x - 2.15,
-            EIRP.ERP_mW: lambda x, **kwargs: pow(10, ( x - 2.15 ) / 10),
-            EIRP.dbuv_per_m: lambda x, **kwargs: eirp_to_dbuvm(x, kwargs["distance"], kwargs["slope"]),
+            EIRP.ERP_mW: lambda x, **kwargs: pow(10, (x - 2.15) / 10),
+            EIRP.dbuv_per_m: lambda x, **kwargs: eirp_to_dbuvm(
+                x, kwargs["distance"], kwargs["slope"]
+            ),
             EIRP.dbuv: lambda x, **kwargs: x + 107,
-            EIRP.W_m_sq: lambda x, **kwargs: eirp_to_wm2(x, kwargs["distance"])
+            EIRP.W_m_sq: lambda x, **kwargs: eirp_to_wm2(x, kwargs["distance"]),
         }

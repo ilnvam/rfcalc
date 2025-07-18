@@ -1,10 +1,12 @@
+import inspect
 from abc import ABC, abstractmethod
 from enum import Enum
 from typing import Callable, Any
-import inspect
+
 
 class UnitEnum(Enum):
     """Marker interface for unit enums."""
+
     pass
 
 
@@ -52,6 +54,7 @@ class BaseConverter(ABC):
     Dictionary contain the conversion from and to base units.
     key is the target unit and value is the function for conversion.
     """
+
     @property
     @abstractmethod
     def _to_base(self) -> dict[UnitEnum, Callable[..., float]]:
@@ -80,7 +83,9 @@ class BaseConverter(ABC):
         """
         pass
 
-    def convert(self, value: float, from_unit: UnitEnum, to_unit: UnitEnum, **kwargs: Any) -> float:
+    def convert(
+        self, value: float, from_unit: UnitEnum, to_unit: UnitEnum, **kwargs: Any
+    ) -> float:
         """
         Convert a numeric value from one unit to another within the unit system.
 
@@ -159,14 +164,19 @@ class BaseConverter(ABC):
                 bound_args = sig.bind_partial(value, **kwargs)
                 bound_args.apply_defaults()
                 missing = [
-                    name for name, param in sig.parameters.items()
+                    name
+                    for name, param in sig.parameters.items()
                     if name not in bound_args.arguments and param.default is param.empty
                 ]
-            #If the re-binding fails (e.g. invalid structure), fallback to "<unknown>"
+            # If the re-binding fails (e.g. invalid structure), fallback to "<unknown>"
             except TypeError:
                 missing = ["<unknown>"]
-            raise TypeError(f"Missing required arguments for conversion: {missing}") from e
+            raise TypeError(
+                f"Missing required arguments for conversion: {missing}"
+            ) from e
         except KeyError as e:
             # Missing a specific key in kwargs access
             missing_key = e.args[0]
-            raise KeyError(f"Missing required keyword argument '{missing_key}' for conversion") from e
+            raise KeyError(
+                f"Missing required keyword argument '{missing_key}' for conversion"
+            ) from e

@@ -3,9 +3,10 @@ import customtkinter
 from View.beamwidth_frame import BeamwidthFrame
 from View.eirp_frame import EIRPFrame
 from View.field_strength_frame import FieldStrengthFrame
-from View.sidebar_frame import SidebarFrame
 from View.interpolate_frame import InterpolateFrame
 from View.limit_convert_frame import LimitConvertFrame
+from View.sidebar_frame import SidebarFrame
+
 
 class App(customtkinter.CTk):
     """Main application window."""
@@ -28,31 +29,33 @@ class App(customtkinter.CTk):
         self.grid_rowconfigure(2, weight=1)
         self.grid_rowconfigure(3, weight=1)
 
-
         side_frame = SidebarFrame(self)
         side_frame.grid(row=0, column=0, sticky="nsew", rowspan=4)
 
-        scroll_mainframe = customtkinter.CTkScrollableFrame(self, fg_color="transparent", corner_radius=0)
+        scroll_mainframe = customtkinter.CTkScrollableFrame(
+            self, fg_color="transparent", corner_radius=0
+        )
         scroll_mainframe.grid(row=0, column=1, sticky="nsew", rowspan=4)
 
         # ====== Row 0 ======
         fs_frame = FieldStrengthFrame(scroll_mainframe, "Field Strength Converter")
-        fs_frame.grid(row=0, column=1, padx=(10,0), pady=(10,0), sticky="nsew")
+        fs_frame.grid(row=0, column=1, padx=(10, 0), pady=(10, 0), sticky="nsew")
 
         e_frame = EIRPFrame(scroll_mainframe, "EIRP Calculator")
-        e_frame.grid(row=0, column=2, padx=(10, 0), pady=(10,0), sticky="nsew")
+        e_frame.grid(row=0, column=2, padx=(10, 0), pady=(10, 0), sticky="nsew")
 
         # ====== Row 1 ======
         i_frame = InterpolateFrame(scroll_mainframe, "Interpolate")
-        i_frame.grid(row=1, column=1, padx=(10, 0), pady=(10,0), sticky="nsew")
+        i_frame.grid(row=1, column=1, padx=(10, 0), pady=(10, 0), sticky="nsew")
 
         l_frame = LimitConvertFrame(scroll_mainframe, "Limit Convert")
-        l_frame.grid(row=1, column=2, padx=(10,0), pady=(10,0), sticky="nsew")
+        l_frame.grid(row=1, column=2, padx=(10, 0), pady=(10, 0), sticky="nsew")
 
         # ====== Row 2 ======
 
         b_frame = BeamwidthFrame(scroll_mainframe, "Antenna to EUT Distance")
-        b_frame.grid(row=2, column=1, padx=(10,0), pady=(10,10), sticky="nsew")
+        b_frame.grid(row=2, column=1, padx=(10, 0), pady=(10, 10), sticky="nsew")
+
 
 def main():
     app = App()

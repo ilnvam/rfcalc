@@ -1,6 +1,9 @@
-import customtkinter
 import tkinter as tk
+
+import customtkinter
+
 import UnitConverter.rf_util as rf
+
 
 class BeamwidthFrame(customtkinter.CTkFrame):
     def __init__(self, parent, title):
@@ -11,7 +14,9 @@ class BeamwidthFrame(customtkinter.CTkFrame):
         # Title label
         self.title_label = customtkinter.CTkLabel(self, text=title)
         self.title_label.cget("font").configure(size=22, weight="bold")
-        self.title_label.grid(row=0, column=0, padx=12, pady=(10, 0), sticky="w", columnspan=2)
+        self.title_label.grid(
+            row=0, column=0, padx=12, pady=(10, 0), sticky="w", columnspan=2
+        )
 
         # ====== Row 1 ======
 
@@ -22,7 +27,9 @@ class BeamwidthFrame(customtkinter.CTkFrame):
         # Beamwidth Entry
         self.beamwidth_val = tk.StringVar(value="0.0")
         self.beamwidth_val.trace_add("write", self.update_result)
-        self.beamwidth_entry = customtkinter.CTkEntry(self, textvariable=self.beamwidth_val)
+        self.beamwidth_entry = customtkinter.CTkEntry(
+            self, textvariable=self.beamwidth_val
+        )
         self.beamwidth_entry.grid(row=1, column=1, padx=12, pady=(10, 0))
 
         # ====== Row 2 ======
@@ -48,10 +55,9 @@ class BeamwidthFrame(customtkinter.CTkFrame):
             fg_color=("#F9F9FA", "#343638"),
             corner_radius=6,
             width=138,
-            anchor="w"
+            anchor="w",
         )
         self.result_label.grid(row=3, column=1, padx=12, pady=(10, 10), sticky="w")
-
 
     def update_result(self, *args):
 

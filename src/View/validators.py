@@ -7,6 +7,7 @@ def is_float_or_empty(text: str) -> bool:
     except ValueError:
         return False
 
+
 def is_float_and_not_zero(text: str) -> bool:
     try:
         val = float(text)

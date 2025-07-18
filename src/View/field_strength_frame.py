@@ -1,5 +1,7 @@
 import tkinter as tk
+
 import customtkinter
+
 from UnitConverter.rf_converter import FSUNIT, FieldStrengthConverter
 
 
@@ -19,21 +21,26 @@ class FieldStrengthFrame(customtkinter.CTkFrame):
         # Title label
         self.title_label = customtkinter.CTkLabel(self, text=title)
         self.title_label.cget("font").configure(size=22, weight="bold")
-        self.title_label.grid(row=0, column=0, padx=10, pady=(10, 0), sticky="w", columnspan=3)
+        self.title_label.grid(
+            row=0, column=0, padx=10, pady=(10, 0), sticky="w", columnspan=3
+        )
 
         # ====== Row 1 ======
 
         self.textbox = customtkinter.CTkTextbox(self, width=424, height=122)
-        self.textbox.grid(row=1, column=0, padx=12, pady=(10, 5), sticky="ew", columnspan=3)
+        self.textbox.grid(
+            row=1, column=0, padx=12, pady=(10, 5), sticky="ew", columnspan=3
+        )
         self.textbox.insert(
             "0.0",
-                   "dBµV/m \t= 20 x Log(V/m) + 120\n" +
-                   "dBV/m \t= dBµV/m - 120\n" +
-                   "dBW \t= dBm - 30\n"
-                   "dBµA/m \t= dBµV/m + 51.5\n" +
-                   "dBpT \t= dBµA/m + 2.0\n" +
-                   "1 Tesla \t= 10000 Gauss\n" +
-                   "1 V/m \t= \u221A(W/m\u00B2 x 377)")
+            "dBµV/m \t= 20 x Log(V/m) + 120\n"
+            + "dBV/m \t= dBµV/m - 120\n"
+            + "dBW \t= dBm - 30\n"
+            "dBµA/m \t= dBµV/m + 51.5\n"
+            + "dBpT \t= dBµA/m + 2.0\n"
+            + "1 Tesla \t= 10000 Gauss\n"
+            + "1 V/m \t= \u221a(W/m\u00b2 x 377)",
+        )
         self.textbox.configure(state="disabled")
 
         # ====== Row 2 ======
@@ -55,9 +62,9 @@ class FieldStrengthFrame(customtkinter.CTkFrame):
             fg_color=("#F9F9FA", "#343638"),
             corner_radius=6,
             width=138,
-            anchor="w"
+            anchor="w",
         )
-        self.to_label.grid(row=2, column=1, padx=(0,12), pady=(10, 5), sticky="w")
+        self.to_label.grid(row=2, column=1, padx=(0, 12), pady=(10, 5), sticky="w")
 
         # ====== Row 3 ======
 
@@ -65,7 +72,7 @@ class FieldStrengthFrame(customtkinter.CTkFrame):
         self.from_option = customtkinter.CTkOptionMenu(
             self,
             values=[name.value for name in FSUNIT],
-            command=self._on_from_unit_change
+            command=self._on_from_unit_change,
         )
         self.from_option.grid(row=3, column=0, padx=12, pady=(0, 8), sticky="w")
 
@@ -73,9 +80,9 @@ class FieldStrengthFrame(customtkinter.CTkFrame):
         self.to_option = customtkinter.CTkOptionMenu(
             self,
             values=[name.value for name in FSUNIT],
-            command=self._on_to_unit_change
+            command=self._on_to_unit_change,
         )
-        self.to_option.grid(row=3, column=1, padx=(0,12), pady=(0, 8), sticky="w")
+        self.to_option.grid(row=3, column=1, padx=(0, 12), pady=(0, 8), sticky="w")
 
         self.from_option.set(self.from_enum_var.value)
         self.to_option.set(self.to_enum_var.value)
@@ -92,7 +99,7 @@ class FieldStrengthFrame(customtkinter.CTkFrame):
         try:
             result = self.conv.convert(value, self.from_enum_var, self.to_enum_var)
             self.to_label.configure(text=f"{result:.10f}".rstrip("0").rstrip("."))
-        except (ValueError,tk.TclError) as e:
+        except (ValueError, tk.TclError) as e:
             print(e)
 
     def _on_from_unit_change(self, selected_value: str):

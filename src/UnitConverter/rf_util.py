@@ -1,14 +1,19 @@
 from math import log10, tan, radians
 
+
 def log_20(value):
-    """ Log value for voltage and current in 50ohm system """
+    """Log value for voltage and current in 50ohm system"""
     return 20 * log10(value)
 
-def inverse_log_20(value):
-    """ Inverse Log value for voltage and current in 50ohm system """
-    return pow(10,value/20)
 
-def interpolate(freq1: float, amp1: float, freq2: float, amp2: float, target_freq: float) -> float:
+def inverse_log_20(value):
+    """Inverse Log value for voltage and current in 50ohm system"""
+    return pow(10, value / 20)
+
+
+def interpolate(
+    freq1: float, amp1: float, freq2: float, amp2: float, target_freq: float
+) -> float:
     """
     Linearly interpolates the amplitude at a given target frequency
     between two known frequency-amplitude points.
@@ -29,9 +34,11 @@ def interpolate(freq1: float, amp1: float, freq2: float, amp2: float, target_fre
     """
     # ---------- Type checks ----------
     for name, val in {
-        "freq1": freq1, "amp1": amp1,
-        "freq2": freq2, "amp2": amp2,
-        "target_freq": target_freq
+        "freq1": freq1,
+        "amp1": amp1,
+        "freq2": freq2,
+        "amp2": amp2,
+        "target_freq": target_freq,
     }.items():
         if not isinstance(val, (int, float)):
             raise TypeError(f"{name} must be a number, got {type(val).__name__!s}")
@@ -44,13 +51,16 @@ def interpolate(freq1: float, amp1: float, freq2: float, amp2: float, target_fre
 
     lower, upper = sorted((freq1, freq2))
     if not (lower <= target_freq <= upper):
-        raise ValueError(f"Target frequency {target_freq} is outside the interpolation range ({lower}–{upper}).")
+        raise ValueError(
+            f"Target frequency {target_freq} is outside the interpolation range ({lower}–{upper})."
+        )
 
     # Linear interpolation formula:
     interpolated_amp = amp1 + (amp2 - amp1) * ((target_freq - freq1) / (freq2 - freq1))
     return interpolated_amp
 
-def limit_convert(d1:float, d2:float, l1:float, slope:float) -> float:
+
+def limit_convert(d1: float, d2: float, l1: float, slope: float) -> float:
     """
     Calculate the limit conversion using the formula:
     l1 + (slope * log10(d1/d2))
@@ -68,16 +78,19 @@ def limit_convert(d1:float, d2:float, l1:float, slope:float) -> float:
         ValueError: If d1 or d2 is not a positive number.
         TypeError: If any input is not a float or int.
     """
-    for name, value in {'d1': d1, 'd2': d2, 'l1': l1, 'slope': slope}.items():
+    for name, value in {"d1": d1, "d2": d2, "l1": l1, "slope": slope}.items():
         if not isinstance(value, (float, int)):
-            raise TypeError(f"{name} must be a float or int, got {type(value).__name__}")
+            raise TypeError(
+                f"{name} must be a float or int, got {type(value).__name__}"
+            )
 
     if d1 <= 0:
         raise ValueError("d1 must be a positive number.")
     if d2 <= 0:
         raise ValueError("d2 must be a positive number.")
 
-    return l1 + (slope * log10(d1/d2))
+    return l1 + (slope * log10(d1 / d2))
+
 
 def antenna_eut_distance(beamwidth: float, eut_height: float) -> float:
     """
@@ -106,9 +119,11 @@ def antenna_eut_distance(beamwidth: float, eut_height: float) -> float:
     ValueError
         If `beamwidth` or `eut_height` is not positive.
     """
-    for name, value in {'beamwidth': beamwidth, 'eut_height': eut_height}.items():
+    for name, value in {"beamwidth": beamwidth, "eut_height": eut_height}.items():
         if not isinstance(value, (float, int)):
-            raise TypeError(f"{name} must be a float or int, got {type(value).__name__}")
+            raise TypeError(
+                f"{name} must be a float or int, got {type(value).__name__}"
+            )
 
     if beamwidth <= 0:
         raise ValueError("beamwidth must be a positive number.")

@@ -1,5 +1,7 @@
 import tkinter as tk
+
 import customtkinter
+
 from UnitConverter import rf_util as rf
 
 
@@ -13,7 +15,9 @@ class LimitConvertFrame(customtkinter.CTkFrame):
         # Title label
         self.title_label = customtkinter.CTkLabel(self, text=title)
         self.title_label.cget("font").configure(size=22, weight="bold")
-        self.title_label.grid(row=0, column=0, padx=12, pady=(10, 0), sticky="w", columnspan=2)
+        self.title_label.grid(
+            row=0, column=0, padx=12, pady=(10, 0), sticky="w", columnspan=2
+        )
 
         # ====== Row 1 ======
 
@@ -23,7 +27,7 @@ class LimitConvertFrame(customtkinter.CTkFrame):
             text="20 dB/decade",
             variable=self.slope_val,
             command=self.on_radiobutton_change,
-            value=20
+            value=20,
         )
 
         self.radio40 = customtkinter.CTkRadioButton(
@@ -31,7 +35,7 @@ class LimitConvertFrame(customtkinter.CTkFrame):
             text="40 dB/decade",
             variable=self.slope_val,
             command=self.on_radiobutton_change,
-            value=40
+            value=40,
         )
 
         self.radio20.grid(row=1, column=0, padx=12, pady=(10, 0), sticky="w")
@@ -90,7 +94,7 @@ class LimitConvertFrame(customtkinter.CTkFrame):
             fg_color=("#F9F9FA", "#343638"),
             corner_radius=6,
             width=138,
-            anchor="w"
+            anchor="w",
         )
         self.result_label.grid(row=5, column=1, padx=12, pady=(10, 10), sticky="w")
 
